@@ -2,24 +2,24 @@ package structures
 
 import "errors"
 
-type node[T any] struct {
+type node[T comparable] struct {
 	value T
 	next  *node[T]
 }
 
-type linkedList[T any] struct {
+type linkedList[T comparable] struct {
 	first *node[T]
 }
 
 // Constructors
-func newNode[T any](element T) *node[T] {
+func newNode[T comparable](element T) *node[T] {
 	return &node[T]{
 		value: element,
 		next:  nil,
 	}
 }
 
-func NewLinkedList[T any]() *linkedList[T] {
+func NewLinkedList[T comparable]() *linkedList[T] {
 	return &linkedList[T]{
 		first: nil,
 	}
@@ -77,7 +77,7 @@ func (l *linkedList[T]) AddAfter(targer T, element T) {
 func (l *linkedList[T]) PopFirst() (T, error) {
 
 	if l.Empty() {
-		return *new(T), errors.New("ERROR: Attempt to get an element from an empty linked list")
+		return *new(T), errors.New("ERROR: Attempt to remove an element from an empty linked list")
 	}
 
 	firstValue := l.first.value
@@ -90,7 +90,7 @@ func (l *linkedList[T]) PopFirst() (T, error) {
 func (l *linkedList[T]) PopLast() (T, error) {
 
 	if l.Empty() {
-		return *new(T), errors.New("ERROR: Attempt to get an element from an empty linked list")
+		return *new(T), errors.New("ERROR: Attempt to remove an element from an empty linked list")
 	}
 
 	if l.first.next == nil {
@@ -111,6 +111,26 @@ func (l *linkedList[T]) PopLast() (T, error) {
 	return lastValue, nil
 }
 
-func (l *linkedList[T]) Remove(element T) (T, error) {
+func (l *linkedList[T]) Pop(element T) error {
 
+	if l.Empty() {
+		return errors.New("ERROR: Attempt to remove an element from an empty linked list")
+	}
+
+	if l.first.value == element {
+		l.first = l.first.next
+		return nil
+	}
+
+	prior := l.first
+
+	for prior.next != nil {
+		if prior.next.value == element {
+			prior.next = prior.next.next
+			return nil
+		}
+		prior = prior.next
+	}
+
+	return nil
 }
