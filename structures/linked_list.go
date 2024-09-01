@@ -1,5 +1,7 @@
 package structures
 
+import "errors"
+
 type node[T any] struct {
 	value T
 	next  *node[T]
@@ -9,6 +11,7 @@ type linkedList[T any] struct {
 	first *node[T]
 }
 
+// Constructors
 func newNode[T any](element T) *node[T] {
 	return &node[T]{
 		value: element,
@@ -22,10 +25,12 @@ func NewLinkedList[T any]() *linkedList[T] {
 	}
 }
 
+// General purpouse methods
 func (l linkedList[T]) Empty() bool {
 	return l.first == nil
 }
 
+// Insertion methods
 func (l *linkedList[T]) AddFirst(element T) {
 
 	node := newNode(element)
@@ -54,4 +59,42 @@ func (l *linkedList[T]) AddLast(element T) {
 	}
 
 	last.next = node
+}
+
+// Deletion methods
+func (l *linkedList[T]) PopFirst() (T, error) {
+
+	if l.Empty() {
+		return *new(T), errors.New("ERROR: Attempt to get an element from an empty linked list")
+	}
+
+	firstValue := l.first.value
+	newFirst := l.first.next
+	l.first = newFirst
+
+	return firstValue, nil
+}
+
+func (l *linkedList[T]) PopLast() (T, error) {
+
+	if l.Empty() {
+		return *new(T), errors.New("ERROR: Attempt to get an element from an empty linked list")
+	}
+
+	if l.first.next == nil {
+		lastValue := l.first.value
+		l.first = nil
+		return lastValue, nil
+	}
+
+	priorToLast := l.first
+	var lastValue T
+
+	for (priorToLast.next).next != nil {
+		priorToLast = priorToLast.next
+	}
+
+	lastValue = priorToLast.next.value
+	priorToLast.next = nil
+	return lastValue, nil
 }
