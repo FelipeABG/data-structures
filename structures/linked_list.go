@@ -30,6 +30,10 @@ func (l linkedList[T]) Empty() bool {
 	return l.first == nil
 }
 
+func (l linkedList[T]) Get(element T) (T, error) {
+
+}
+
 // Insertion methods
 func (l *linkedList[T]) AddFirst(element T) {
 
@@ -59,6 +63,14 @@ func (l *linkedList[T]) AddLast(element T) {
 	}
 
 	last.next = node
+}
+
+func (l *linkedList[T]) AddSorted(element T) {
+
+}
+
+func (l *linkedList[T]) AddAfter(targer T, element T) {
+
 }
 
 // Deletion methods
@@ -97,4 +109,8 @@ func (l *linkedList[T]) PopLast() (T, error) {
 	lastValue = priorToLast.next.value
 	priorToLast.next = nil
 	return lastValue, nil
+}
+
+func (l *linkedList[T]) Remove(element T) (T, error) {
+
 }
