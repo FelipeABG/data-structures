@@ -25,12 +25,27 @@ func NewLinkedList[T comparable]() *linkedList[T] {
 	}
 }
 
-// General purpouse methods
+// General purpose methods
 func (l linkedList[T]) Empty() bool {
 	return l.first == nil
 }
 
 func (l linkedList[T]) Get(element T) (T, error) {
+
+	if l.Empty() {
+		return *new(T), errors.New("ERROR: Attempt to get an element from an empty linked list")
+	}
+
+	target := l.first
+
+	for target != nil {
+		if target.value == element {
+			return target.value, nil
+		}
+		target = target.next
+	}
+
+	return *new(T), errors.New("ERROR: Attempt to get a non-existent element from the linked list")
 
 }
 
@@ -132,5 +147,5 @@ func (l *linkedList[T]) Pop(element T) error {
 		prior = prior.next
 	}
 
-	return nil
+	return errors.New("ERROR: Attempt to pop a non-existent element from the linked list")
 }
