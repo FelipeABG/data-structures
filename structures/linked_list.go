@@ -39,3 +39,19 @@ func (l *linkedList[T]) AddFirst(element T) {
 	l.first = node
 
 }
+
+func (l *linkedList[T]) AddLast(element T) {
+	node := newNode(element)
+
+	if l.Empty() {
+		l.first = node
+		return
+	}
+
+	last := l.first
+	for last.next != nil {
+		last = last.next
+	}
+
+	last.next = node
+}
