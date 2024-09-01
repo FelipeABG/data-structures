@@ -8,3 +8,34 @@ type node[T any] struct {
 type linkedList[T any] struct {
 	first *node[T]
 }
+
+func newNode[T any](element T) *node[T] {
+	return &node[T]{
+		value: element,
+		next:  nil,
+	}
+}
+
+func NewLinkedList[T any]() *linkedList[T] {
+	return &linkedList[T]{
+		first: nil,
+	}
+}
+
+func (l linkedList[T]) Empty() bool {
+	return l.first == nil
+}
+
+func (l *linkedList[T]) AddFirst(element T) {
+
+	node := newNode(element)
+
+	if l.Empty() {
+		l.first = node
+		return
+	}
+
+	node.next = l.first
+	l.first = node
+
+}
