@@ -1,0 +1,100 @@
+package structures
+
+import (
+	"errors"
+	"fmt"
+)
+
+type queue[T any] struct {
+	head int8
+	tail int8
+	size int8
+	data []T
+}
+
+func NewQueue[T any](size int8) *queue[T] {
+	return &queue[T]{
+		head: -1,
+		tail: -1,
+		size: size,
+		data: make([]T, size),
+	}
+}
+
+func (q *queue[T]) Empty() bool {
+	return q.head == -1
+}
+
+func (q *queue[T]) Full() bool {
+	return (q.head == 0 && q.tail == q.size-1) || (q.tail+1 == q.head)
+}
+
+func (q *queue[T]) Insert(element T) error {
+	if q.Full() {
+		return errors.New("ERROR: Attempt to insert an element into a full queue")
+	}
+
+	if q.head == -1 {
+		q.head = 0
+	}
+
+	if q.tail == q.size-1 {
+		q.tail = -1
+	}
+
+	q.tail += 1
+	q.data[q.tail] = element
+
+	return nil
+}
+
+func (q *queue[T]) Remove() (error, T) {
+	if q.Empty() {
+		return errors.New("ERROR: Attempt to remove an element from an empty queue"), *new(T)
+	}
+
+	element := q.data[q.head]
+	q.data[q.head] = *new(T)
+
+	if q.head == q.tail {
+		q.head = -1
+		q.tail = -1
+	} else {
+		q.head += 1
+	}
+
+	return nil, element
+}
+
+func (q *queue[T]) String() string {
+	if q.Empty() {
+		return ""
+	}
+
+	var result string
+	i := q.head
+
+	for {
+		result += fmt.Sprintf("%v ", q.data[i])
+
+		if i == q.tail {
+			break
+		}
+
+		if i == q.size-1 {
+			i = -1
+		}
+
+		i += 1
+	}
+
+	return result
+}
+
+func (q *queue[T]) Get() (error, T) {
+	if q.Empty() {
+		return errors.New("ERROR: Attempt to get an element from an empty queue"), *new(T)
+	}
+
+	return nil, q.data[q.head]
+}
