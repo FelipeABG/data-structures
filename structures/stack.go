@@ -49,6 +49,10 @@ func (s *stack[T]) Remove() (T, error) {
 	return target, nil
 }
 
-func (s stack[T]) Peek() T {
+func (s *stack[T]) Peek() (T, error) {
+	if s.Empty() {
+		return *new(T), errors.New("ERROR: Attempt to get an elemento from an empty stack")
+	}
 
+	return s.data[s.top], nil
 }
