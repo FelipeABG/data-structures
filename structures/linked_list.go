@@ -2,24 +2,24 @@ package structures
 
 import "errors"
 
-type node[T comparable] struct {
+type node[T any] struct {
 	value T
 	next  *node[T]
 }
 
-type linkedList[T comparable] struct {
+type linkedList[T any] struct {
 	first *node[T]
 }
 
 // Constructors
-func newNode[T comparable](element T) *node[T] {
+func newNode[T any](element T) *node[T] {
 	return &node[T]{
 		value: element,
 		next:  nil,
 	}
 }
 
-func NewLinkedList[T comparable]() *linkedList[T] {
+func NewLinkedList[T any]() *linkedList[T] {
 	return &linkedList[T]{
 		first: nil,
 	}
