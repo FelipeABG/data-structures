@@ -37,4 +37,11 @@ func (s *dynamicStack[T]) Peek() (T, error) {
 		return *new(T), errors.New("ERROR: Attempt to get an element from an empty stack.")
 	}
 
+	target := s.data.first
+
+	for target.next != nil {
+		target = target.next
+	}
+
+	return target.value, nil
 }
