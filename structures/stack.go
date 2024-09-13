@@ -8,6 +8,7 @@ type stack[T any] struct {
 	data []T
 }
 
+// Creates and return a reference to a stack
 func NewStack[T any](size int8) *stack[T] {
 	return &stack[T]{
 		top:  -1,
@@ -16,14 +17,17 @@ func NewStack[T any](size int8) *stack[T] {
 	}
 }
 
+// Checks if the stack is empty
 func (s stack[T]) Empty() bool {
 	return s.top == -1
 }
 
+// Checks if the stack is full
 func (s *stack[T]) Full() bool {
 	return s.top == s.size-1
 }
 
+// Inserts the element at the end of the stack
 func (s *stack[T]) Insert(element T) error {
 
 	if s.Full() {
@@ -36,6 +40,7 @@ func (s *stack[T]) Insert(element T) error {
 	return nil
 }
 
+// Removes the last element of the stack and returns it
 func (s *stack[T]) Remove() (T, error) {
 
 	if s.Empty() {
@@ -49,6 +54,7 @@ func (s *stack[T]) Remove() (T, error) {
 	return target, nil
 }
 
+// Returns the last element of the stack.
 func (s *stack[T]) Peek() (T, error) {
 	if s.Empty() {
 		return *new(T), errors.New("ERROR: Attempt to get an elemento from an empty stack")

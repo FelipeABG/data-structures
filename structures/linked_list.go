@@ -11,7 +11,7 @@ type linkedList[T any] struct {
 	first *node[T]
 }
 
-// Constructors
+// Creates and returns a reference to a node
 func newNode[T any](element T) *node[T] {
 	return &node[T]{
 		value: element,
@@ -19,17 +19,19 @@ func newNode[T any](element T) *node[T] {
 	}
 }
 
+// Creates and returns a reference to a linked list
 func NewLinkedList[T any]() *linkedList[T] {
 	return &linkedList[T]{
 		first: nil,
 	}
 }
 
-// General purpose methods
+// Checks if the list is empty
 func (l linkedList[T]) Empty() bool {
 	return l.first == nil
 }
 
+// Checks if the element given as argument exist and returns it.
 func (l linkedList[T]) Get(element T) (T, error) {
 
 	if l.Empty() {
@@ -49,7 +51,7 @@ func (l linkedList[T]) Get(element T) (T, error) {
 
 }
 
-// Insertion methods
+// Inserts an element as the first element of the list.
 func (l *linkedList[T]) AddFirst(element T) {
 
 	node := newNode(element)
@@ -64,6 +66,7 @@ func (l *linkedList[T]) AddFirst(element T) {
 
 }
 
+// Inserts an element as the last element of the list
 func (l *linkedList[T]) AddLast(element T) {
 	node := newNode(element)
 
@@ -88,7 +91,7 @@ func (l *linkedList[T]) AddAfter(targer T, element T) {
 
 }
 
-// Deletion methods
+// Removes the first element of the list
 func (l *linkedList[T]) PopFirst() (T, error) {
 
 	if l.Empty() {
@@ -102,6 +105,7 @@ func (l *linkedList[T]) PopFirst() (T, error) {
 	return firstValue, nil
 }
 
+// Removes the last element of the list
 func (l *linkedList[T]) PopLast() (T, error) {
 
 	if l.Empty() {
@@ -126,6 +130,7 @@ func (l *linkedList[T]) PopLast() (T, error) {
 	return lastValue, nil
 }
 
+// Removes the given element from the list
 func (l *linkedList[T]) Pop(element T) error {
 
 	if l.Empty() {

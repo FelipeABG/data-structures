@@ -6,20 +6,24 @@ type dynamicStack[T any] struct {
 	data *linkedList[T]
 }
 
+// Creates and returns a reference to a dynamic stack
 func NewDynamicStack[T any]() *dynamicStack[T] {
 	return &dynamicStack[T]{
 		data: NewLinkedList[T](),
 	}
 }
 
+// Check if the stack is empty
 func (s dynamicStack[T]) Empty() bool {
 	return s.data.Empty()
 }
 
+// Inserts an element at the end of the stack
 func (s *dynamicStack[T]) Insert(element T) {
 	s.data.AddLast(element)
 }
 
+// Removes the last element of the stack
 func (s *dynamicStack[T]) Remove() (T, error) {
 
 	if s.Empty() {
@@ -31,6 +35,7 @@ func (s *dynamicStack[T]) Remove() (T, error) {
 	return result, nil
 }
 
+// Returns the last element of the stack
 func (s *dynamicStack[T]) Peek() (T, error) {
 
 	if s.Empty() {
